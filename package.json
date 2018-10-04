@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bitcore-lib": "*",
-    "bitcore-explorers": "*"
+    "bitcore-explorers": "*",
+    "bitcore-lib": "^0.15.0"
   }
 }

@@ -1,0 +1,1 @@
+open http://chainquery.com/bitcoin-api/decodescript
