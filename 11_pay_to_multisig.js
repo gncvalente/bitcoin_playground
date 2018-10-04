@@ -20,9 +20,10 @@ console.log('');
 // https://github.com/bitpay/bitcore-lib/blob/master/docs/examples.md#import-an-address-via-wif
 // https://www.bitaddress.org/  // ?testnet=true
 
-var address_pippo = new bitcore.PrivateKey('cPWLZe8vFZDoNmWjE4Fz3WGKeGB2Pn681q1ixqLqJ7cB61VZ64sv');
-var address_peppino = new bitcore.PrivateKey('cQXHJNtC9STmAuG6ttwjgmLyUjVWjibG7LPV1aJSbSUupAphgqQ8');
-var address_cappuccio = new bitcore.PrivateKey('cPqgwLiLCk2yKW7Zr76ytkyHMLe2ABEApvs374y85qZxngMMnCy7');
+var wif_private_keys = require('./WIF_private_keys.js');
+var address_pippo = new bitcore.PrivateKey.fromWIF(wif_private_keys.pippo);
+var address_peppino = new bitcore.PrivateKey.fromWIF(wif_private_keys.peppino);
+var address_cappuccio = new bitcore.PrivateKey.fromWIF(wif_private_keys.cappuccio);
 
 var dest_pubkeys = [
 	new bitcore.PublicKey(address_pippo) ,
@@ -32,20 +33,21 @@ var dest_pubkeys = [
 
 dest_pubkeys.sort();
 
+// script multi sig
+var threshold = 2;
+var dest_address = new bitcore.Address(dest_pubkeys, threshold, bitcore.Networks.testnet);
+
 console.log('Indirizzi destinazione ');
 console.log(dest_pubkeys[0]);
 console.log(dest_pubkeys[1]);
 console.log(dest_pubkeys[2]);
 console.log('');
 
-// script multi sig
-var threshold = 2;
-var script = new bitcore.Script.buildMultisigOut(dest_pubkeys, threshold);
-var dest_address = new bitcore.Address(dest_pubkeys, threshold);
+//var script = new bitcore.Script.buildMultisigOut(dest_pubkeys, threshold);
+// console.log('Script Multisig ');
+// console.log(script.toString(), '\n');
 
-console.log('Script Multisig ');
-console.log(script.toString(), '\n');
-
+console.log(dest_address);
 
 // Ora andiamo a trovare un output di transazione non speso
 var insight = new Insight('testnet');

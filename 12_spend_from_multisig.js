@@ -6,29 +6,14 @@ var Insight = explorers.Insight;
 // https://github.com/bitpay/bitcore-lib/blob/master/docs/examples.md#import-an-address-via-wif
 // https://www.bitaddress.org/
 
-var address_pippo = new bitcore.PrivateKey('cPWLZe8vFZDoNmWjE4Fz3WGKeGB2Pn681q1ixqLqJ7cB61VZ64sv');
-var address_peppino = new bitcore.PrivateKey('cQXHJNtC9STmAuG6ttwjgmLyUjVWjibG7LPV1aJSbSUupAphgqQ8');
-var address_cappuccio = new bitcore.PrivateKey('cPqgwLiLCk2yKW7Zr76ytkyHMLe2ABEApvs374y85qZxngMMnCy7');
-
-var privateKeys = [
-	address_pippo,
-	address_peppino,
-	// address_cappuccio
-];
-
-privateKeys.sort();
-
-var publicKeys = privateKeys.map(bitcore.PublicKey);
-
-publicKeys.sort();
-
-var address = new bitcore.Address(publicKeys, 2); // 2 of 2
+var wif_private_keys = require('./WIF_private_keys.js');
+var address_pippo = new bitcore.PrivateKey.fromWIF(wif_private_keys.pippo);
+var address_peppino = new bitcore.PrivateKey.fromWIF(wif_private_keys.peppino);
+var address_cappuccio = new bitcore.PrivateKey.fromWIF(wif_private_keys.cappuccio);
 
 // Ora andiamo a trovare un output di transazione non speso
 var insight = new Insight('testnet');
 
-
-// Devo recuperare l'indirizzo di destinazione per avere i utxos
 var dest_pubkeys = [
 	new bitcore.PublicKey(address_pippo) ,
 	new bitcore.PublicKey(address_peppino),
@@ -37,14 +22,25 @@ var dest_pubkeys = [
 
 dest_pubkeys.sort();
 
-var dest_address = new bitcore.Address(dest_pubkeys, 2);
+// script multi sig
+var threshold = 2;
+var dest_address = new bitcore.Address(dest_pubkeys, threshold, bitcore.Networks.testnet);
 
+console.log(dest_address);
+
+// var dest_address = new bitcore.Address('2MsbGVmhXPV8PoQAamPJoX3Rk9pJXHVwpAU',  bitcore.Networks.testnet);
+// console.log(dest_address);
 
 insight.getUnspentUtxos(dest_address, function(err, utxos){
 	if(err){
 		console.log(err);
 	}else{
 		console.log(utxos);
+
+		if (utxos.length == 0 ){
+			console.log('non trovo l\'output non speso');
+			process.exit();
+		}
 
 		// process.exit();
 
@@ -55,6 +51,15 @@ insight.getUnspentUtxos(dest_address, function(err, utxos){
 		var tx = new bitcore.Transaction();
 		tx.from(utxos[0], dest_pubkeys, 2);
 		tx.to(destinatario, 450000);
+
+		var privateKeys = [
+			address_pippo,
+			address_peppino,
+			// address_cappuccio
+		];
+		
+		// privateKeys.sort();
+
 		tx.sign(privateKeys);
 		
 		tx.serialize(); 
