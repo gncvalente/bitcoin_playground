@@ -3,12 +3,9 @@
 // https://www.bitaddress.org/   // ?testnet=true
 
 module.exports = {
-    pippo: 'cVt47FjeQEArpND6VKXjYVCjNftPW7vAh9xmvBp7HT6pNQv6r1d3',
-    peppino: 'cQCKN6AC3VNpBWszTs4qPkYeLdqAucvQD9pBqVvHd1BFrM66Z8G6',
-    cappuccio: 'cVfrxsb1ZnTqDMEHgayTbYufZ9uV8sTX6pzEykEcFCkPjDP7Grka',
+    pippo: 'cPM9Uu5eTSK4B1vrzuzwUyozDHSUWYAcBojjyARCZFGEAvU3mQm7',
+    peppino: 'cP8nHqDiJ4kvK22hmc1cXrG4ZNedmj9ASCJQojVHgUonrjD7EwF6',
+    cappuccio: 'cTvN6yoF2RD4c6jjkh73rvTEJH2h1mwf24UZ1GoShxKSJNy8hhYV',
 
-    jack: 'cQH7qtiRNxzyhf66NZm9R1iX1zFbAd8PSrSEWvAhEKq6sqjmbShD',
-    jack_tresure: 'cP64CGkBwDiTb3cgdN76UHiEnyokahRDGHQxwzm8UZByhwpTtgF5',
-
-    bob: 'cUeFXoKVxvehzdsVkxH5FQgApY9T2XoQRtnobmuvket862RtsjpY'
+    
 };

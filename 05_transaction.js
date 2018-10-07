@@ -44,17 +44,17 @@ insight.getUnspentUtxos(source.publicKey, function(err, utxos){
 
 		// se volessi inviare la transaizone con
 		// https://live.blockcypher.com/btc-testnet/pushtx/
-		// console.log('questa e\' la transazione', tx.toString());
+		console.log('questa e\' la transazione', tx.toString());
 
 		// invio al network la transazione
-		insight.broadcast(tx.toString(), function(err, returnedTxId){
-			if(err){
-				console.log(err);
-			}else{
-				console.log(
-					'transazione inviata, ecco l\'Id Transazione: ', 
-					returnedTxId);
-			}
-		});
+		// insight.broadcast(tx.toString(), function(err, returnedTxId){
+		// 	if(err){
+		// 		console.log(err);
+		// 	}else{
+		// 		console.log(
+		// 			'transazione inviata, ecco l\'Id Transazione: ', 
+		// 			returnedTxId);
+		// 	}
+		// });
 	}
 });
